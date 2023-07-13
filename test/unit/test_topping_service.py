@@ -74,6 +74,15 @@ class TestToppingService(unittest.TestCase):
         self.assertEqual(response.status_code, 404)
         self.assertEqual(response.json, {'message': 'Topping with id 1 not found'})
 
+    def test_create_topping(self):
+        self.mock_topping.query.filter.return_value = None
+
+        response = self.service.create_topping("sardines")
+
+        # Assertions
+        self.mock_db.session.add.assert_called_once()
+        self.assertEqual(response.status_code, 200)
+
 
 if __name__ == "__main__":
     unittest.main()
