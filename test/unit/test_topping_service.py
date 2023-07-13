@@ -60,7 +60,7 @@ class TestToppingService(unittest.TestCase):
         response = self.service.get_topping_by_id(1)
 
         # Assertions
-        self.mock_topping.query.all.assert_called_once()
+        self.mock_topping.query.get.assert_called_once()
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json, {'topping': {"id": 1, 'name': 'Topping 1'}})
 

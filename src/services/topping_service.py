@@ -27,7 +27,7 @@ class ToppingService:
         if not topping:
             return jsonify(message=f'Topping with id {topping_id} not found'), 404
 
-        return jsonify(toppings=topping.to_dict())
+        return jsonify(topping=topping.to_dict())
 
     @common_response
     def create_topping(self, topping_name):
