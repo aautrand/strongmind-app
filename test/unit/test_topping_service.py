@@ -83,6 +83,15 @@ class TestToppingService(unittest.TestCase):
         self.mock_db.session.add.assert_called_once()
         self.assertEqual(response.status_code, 200)
 
+    def test_create_topping_already_exists(self):
+        self.mock_topping.query.filter.return_value = Topping(id=1, name="sardines")
+
+        response = self.service.create_topping("sardines")
+
+        # Assertions
+        self.assertEqual(response.status_code, 409)
+        self.mock_topping.query.filter.assert_called_once()
+
     def test_update_topping(self):
         self.mock_topping.query.get.return_value = Topping(id=1, name='cheese')
         self.mock_topping.query.filter.return_value = None
