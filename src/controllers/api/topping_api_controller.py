@@ -1,13 +1,14 @@
 from flask import Blueprint, request
 
 from src.extensions import db
+from src.models import Topping
 from src.services import ToppingService
 
 toppings_api = Blueprint("toppings_api",
                          __name__,
                          url_prefix="/api")
 
-topping_service = ToppingService(db)
+topping_service = ToppingService(db, Topping)
 
 
 @toppings_api.route("/toppings", methods=["GET"])

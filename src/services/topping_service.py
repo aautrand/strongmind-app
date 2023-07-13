@@ -5,19 +5,18 @@ from src.decorators import common_response
 
 class ToppingService:
 
-    def __init__(self, db):
+    def __init__(self, db, topping):
         self.db = db
-        self.topping = Topping
+        self.topping = topping
 
     @common_response
     def get_toppings_list(self):
-
         toppings_list = self.topping.query.all()
 
         if not toppings_list:
             return jsonify(message='Toppings not found'), 404
 
-        toppings_json = [topping.to_dict() for topping in self.topping.query.all()]
+        toppings_json = [topping.to_dict() for topping in toppings_list]
         return jsonify(toppings=toppings_json)
 
     @common_response
