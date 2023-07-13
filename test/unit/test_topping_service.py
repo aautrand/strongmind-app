@@ -26,7 +26,7 @@ class TestToppingService(unittest.TestCase):
         with self.app.app_context():
             db.drop_all()
 
-    def test_get_topping_list(self):
+    def test_get_toppings_list(self):
         self.mock_topping.query.all.return_value = [
             Topping(id=1, name='Topping 1'),
             Topping(id=2, name='Topping 2'),
@@ -43,7 +43,7 @@ class TestToppingService(unittest.TestCase):
             {"id": 2, 'name': 'Topping 2'},
             {"id": 3, 'name': 'Topping 3'}]})
 
-    def test_get_topping_list_empty(self):
+    def test_get_toppings_list_empty(self):
         self.mock_topping.query.all.return_value = [
         ]
 
@@ -53,6 +53,16 @@ class TestToppingService(unittest.TestCase):
         self.mock_topping.query.all.assert_called_once()
         self.assertEqual(response.status_code, 404)
         self.assertEqual(response.json, {'message': 'Toppings not found'})
+
+    def test_get_topping_by_id(self):
+        self.mock_topping.query.get.return_value = Topping(id=1, name="Topping 1")
+
+        response = self.service.get_topping_by_id(1)
+
+        # Assertions
+        self.mock_topping.query.all.assert_called_once()
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json, {'topping': {"id": 1, 'name': 'Topping 1'}})
 
 
 if __name__ == "__main__":
