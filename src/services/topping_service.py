@@ -32,7 +32,7 @@ class ToppingService:
     @common_response
     def create_topping(self, topping_name):
 
-        conflicting_topping = Topping.query.filter(Topping.name == topping_name).first()
+        conflicting_topping = self.topping.query.filter(Topping.name == topping_name)
 
         if conflicting_topping:
             return jsonify(message=f"Topping with name {topping_name} already exists"), 409
@@ -47,11 +47,12 @@ class ToppingService:
     @common_response
     def update_topping(self, topping_id, new_topping_name):
 
-        old_topping = Topping.query.get(topping_id)
+        old_topping = self.topping.query.get(topping_id)
+
         if not old_topping:
             return jsonify(message=f'Topping with id {topping_id} not found'), 404
 
-        conflicting_topping = Topping.query.filter(Topping.name == new_topping_name).first()
+        conflicting_topping = self.topping.query.filter(Topping.name == new_topping_name)
         if conflicting_topping:
             return jsonify(message=f"Topping with name {new_topping_name} already exists"), 409
 
@@ -64,7 +65,7 @@ class ToppingService:
     @common_response
     def delete_topping(self, topping_id):
 
-        topping = Topping.query.get(topping_id)
+        topping = self.topping.query.get(topping_id)
 
         if not topping:
             return jsonify(message=f'Topping with id {topping_id} not found'), 404

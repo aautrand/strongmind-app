@@ -83,6 +83,58 @@ class TestToppingService(unittest.TestCase):
         self.mock_db.session.add.assert_called_once()
         self.assertEqual(response.status_code, 200)
 
+    def test_update_topping(self):
+        self.mock_topping.query.get.return_value = Topping(id=1, name='cheese')
+        self.mock_topping.query.filter.return_value = None
+
+        response = self.service.update_topping(1, "cheese2")
+
+        # Assertions
+        self.assertEqual(response.status_code, 200)
+        self.mock_topping.query.get.assert_called_once()
+        self.mock_topping.query.filter.assert_called_once()
+        self.mock_db.session.commit.assert_called_once()
+
+    def test_update_topping_missing(self):
+        self.mock_topping.query.get.return_value = None
+
+        response = self.service.update_topping(1, "cheese2")
+
+        # Assertions
+        self.assertEqual(response.status_code, 404)
+        self.mock_topping.query.get.assert_called_once()
+
+    def test_update_topping_duplicate(self):
+        self.mock_topping.query.get.return_value = Topping(id=1, name='cheese')
+        self.mock_topping.query.filter.return_value = Topping(id=2, name='cheese2')
+
+        response = self.service.update_topping(1, "cheese2")
+
+        # Assertions
+        self.assertEqual(response.status_code, 409)
+        self.mock_topping.query.get.assert_called_once()
+        self.mock_topping.query.filter.assert_called_once()
+
+    def test_delete_topping(self):
+        self.mock_topping.query.get.return_value = Topping(id=1, name='cheese')
+
+        response = self.service.delete_topping(1)
+
+        # Assertions
+        self.assertEqual(response.status_code, 200)
+        self.mock_topping.query.get.assert_called_once()
+        self.mock_db.session.delete.assert_called_once()
+        self.mock_db.session.commit.assert_called_once()
+
+    def test_delete_topping_missing(self):
+        self.mock_topping.query.get.return_value = None
+
+        response = self.service.delete_topping(1)
+
+        # Assertions
+        self.assertEqual(response.status_code, 404)
+        self.mock_topping.query.get.assert_called_once()
+
 
 if __name__ == "__main__":
     unittest.main()
