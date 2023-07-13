@@ -64,6 +64,16 @@ class TestToppingService(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json, {'topping': {"id": 1, 'name': 'Topping 1'}})
 
+    def test_get_topping_by_id_missing(self):
+        self.mock_topping.query.get.return_value = None
+
+        response = self.service.get_topping_by_id(1)
+
+        # Assertions
+        self.mock_topping.query.get.assert_called_once()
+        self.assertEqual(response.status_code, 404)
+        self.assertEqual(response.json, {'message': 'Topping with id 1 not found'})
+
 
 if __name__ == "__main__":
     unittest.main()
