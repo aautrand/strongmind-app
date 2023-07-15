@@ -32,7 +32,7 @@ class ToppingService:
     @common_response
     def create_topping(self, topping_name):
 
-        conflicting_topping = self.topping.query.filter(Topping.name == topping_name)
+        conflicting_topping = self.topping.query.filter(Topping.name == topping_name).first()
 
         if conflicting_topping:
             return jsonify(message=f"Topping with name {topping_name} already exists"), 409

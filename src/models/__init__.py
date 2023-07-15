@@ -26,7 +26,8 @@ class Pizza(db.Model):
     def to_dict(self):
         return {
             'id': self.id,
-            'name': self.name
+            'name': self.name,
+            'toppings': [topping.to_dict() for topping in self.toppings]
         }
 
     def __repr__(self):
