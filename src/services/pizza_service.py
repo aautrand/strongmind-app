@@ -69,20 +69,23 @@ class PizzaService:
         if not old_pizza:
             return jsonify(message=f"Pizza with id {pizza_id} does not exists"), 404
 
-        conflicting_pizza = self.pizza.query.filter_by(name=new_pizza_name).first()
+        if new_pizza_name != old_pizza.name:
+            conflicting_pizza = self.pizza.query.filter_by(name=new_pizza_name).first()
 
-        if conflicting_pizza:
-            return jsonify(message=f"Pizza with name {new_pizza_name} already exists"), 409
+            if conflicting_pizza:
+                return jsonify(message=f"Pizza with name {new_pizza_name} already exists"), 409
 
-        old_pizza.name = new_pizza_name
+            old_pizza.name = new_pizza_name
 
-        if new_toppings:
+        if new_toppings is not None:
             existing_toppings_count = self.toppings.query \
                 .filter(Topping.id.in_(new_toppings)) \
                 .count()
 
             if existing_toppings_count != len(new_toppings):
                 return jsonify(message=f"Some of the ingredients in this pizza are missing"), 400
+
+            old_pizza.toppings = []
 
             for topping_id in new_toppings:
                 topping = Topping.query.filter_by(id=topping_id).first()

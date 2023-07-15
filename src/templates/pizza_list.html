@@ -1,0 +1,98 @@
+{% extends "index.html" %}
+{% block header %}
+<style>
+    .small-col {
+        width: 15%;
+    }
+</style>
+{% endblock %}
+
+
+{% block content %}
+    <!-- Modal -->
+    <div class="modal fade" id="newPizzaModal" tabindex="-1" role="dialog" aria-labelledby="newPizzaModal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="createPizzaModalLabel">New Pizza</h5>
+                </div>
+
+                <div class="modal-body">
+                    <form id="pizzaForm">
+                        <div class="col">
+                            <div class="mb-3">
+                                <label for="pizzaName" class="form-label">Name</label>
+                                <input type="text" class="form-control" id="pizzaName" placeholder="Pizza Name" name="pizzaName">
+                            </div>
+                        </div>
+
+                        <div class="col">
+                            <div class="mb-3">
+                                <label for="toppings" class="form-label">Toppings</label>
+                                {% for topping in toppings %}
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="{{ topping['id'] }}" id="topping{{ topping['id'] }}" name="toppings">
+                                        <label class="form-check-label" for="topping{{ topping['id'] }}">
+                                        {{ topping['name'] }}
+                                        </label>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="saveChanges">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="mt-5">
+        <div class="row">
+            <div class="col-10">
+                <p class="h3">Pizzas List</p>
+            </div>
+            <div class="col-2">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newPizzaModal">
+                  Create New Pizza
+                </button>
+            </div>
+        </div>
+
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                  <th>Pizza Name</th>
+                  <th>Ingredients</th>
+                  <th class="small-col">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="mt-2">
+                {% for pizza in pizza_list %}
+                <tr>
+                    <td>{{ pizza['name'] }}</td>
+                    <td>{{ pizza['toppings_string'] }}</td>
+                    <td class="d-flex">
+                        <form action="{{ url_for('pizza_views.get_pizza_by_id', pizza_id=pizza.id) }}">
+                            <button class="btn btn-warning btn-sm">Edit</button>
+                        </form>
+                        <button class="btn btn-danger btn-sm deletePizza" data-pizza-id="{{ pizza['id'] }}">Delete</button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script src="{{url_for('static', filename='js/scripts.js')}}"></script>
+{% endblock%}
