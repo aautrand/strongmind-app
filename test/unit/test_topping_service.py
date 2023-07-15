@@ -1,6 +1,6 @@
 from flask import Flask
 import unittest
-from unittest.mock import MagicMock
+from unittest.mock import MagicMock, Mock
 
 from src.models import Topping
 from src.services import ToppingService
@@ -75,7 +75,9 @@ class TestToppingService(unittest.TestCase):
         self.assertEqual(response.json, {'message': 'Topping with id 1 not found'})
 
     def test_create_topping(self):
-        self.mock_topping.query.filter.return_value = None
+        query_mock = Mock()
+        query_mock.first.return_value = None
+        self.mock_topping.query.filter.return_value = query_mock
 
         response = self.service.create_topping("sardines")
 
@@ -84,7 +86,9 @@ class TestToppingService(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
 
     def test_create_topping_already_exists(self):
-        self.mock_topping.query.filter.return_value = Topping(id=1, name="sardines")
+        query_mock = Mock()
+        query_mock.first.return_value = Topping(id=1, name="sardines")
+        self.mock_topping.query.filter.return_value = query_mock
 
         response = self.service.create_topping("sardines")
 
