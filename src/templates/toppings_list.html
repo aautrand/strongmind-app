@@ -1,0 +1,104 @@
+{% extends "index.html" %}
+{% block header %}
+<style>
+    .small-col {
+        width: 15%;
+    }
+</style>
+{% endblock %}
+
+
+{% block content %}
+    <div class="modal fade" id="newToppingModal" tabindex="-1" role="dialog" aria-labelledby="newToppingModal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="createToppingModalLabel">New Topping</h5>
+                </div>
+
+                <div class="modal-body">
+                    <form id="toppingForm">
+                        <div class="col">
+                            <div class="mb-3">
+                                <label for="toppingName" class="form-label">Name</label>
+                                <input type="text" class="form-control" id="toppingName" placeholder="Topping Name" name="toppingName">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="saveNewTopping">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="updateToppingModal" tabindex="-1" role="dialog" aria-labelledby="updateToppingModal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="updateToppingModalLabel">Update Topping</h5>
+                </div>
+
+                <div class="modal-body">
+                    <form id="toppingUpdateForm">
+                        <div class="col">
+                            <div class="mb-3">
+                                <label for="toppingName" class="form-label">Name</label>
+                                <input type="hidden" class="form-control" id="toppingUpdateId" name="toppingUpdateId">
+                                <input type="text" class="form-control" id="toppingUpdateName" placeholder="Topping Name" name="toppingUpdateName">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary updateTopping" id="updateTopping">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-5">
+        <div class="row">
+            <div class="col-10">
+                <p class="h3">Toppings List</p>
+            </div>
+            <div class="col-2">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newToppingModal">
+                  Create New Topping
+                </button>
+            </div>
+        </div>
+
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                  <th>Topping Name</th>
+                  <th class="small-col">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="mt-2">
+                {% for topping in toppings %}
+                <tr>
+                    <td>{{ topping['name'] }}</td>
+                    <td class="d-flex">
+                        <button class="btn btn-warning btn-sm editTopping" data-toggle="modal" data-target="#updateToppingModal" data-topping-id="{{ topping['id'] }}" data-topping-name="{{ topping['name'] }}">Edit</button>
+                        <button class="btn btn-danger btn-sm deleteTopping" data-topping-id="{{ topping['id'] }}">Delete</button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script src="{{url_for('static', filename='js/scripts.js')}}"></script>
+{% endblock%}

@@ -1,7 +1,7 @@
 from flask import Flask, render_template
 
 from config import Config
-from src.controllers import pizza_api, toppings_api, pizza_views
+from src.controllers import pizza_api, toppings_api, pizza_views, topping_views
 from src.extensions import db
 
 
@@ -15,6 +15,7 @@ def create_app(config_class=Config):
     app.register_blueprint(toppings_api)
     app.register_blueprint(pizza_api)
     app.register_blueprint(pizza_views)
+    app.register_blueprint(topping_views)
 
     @app.route('/')
     def home():
