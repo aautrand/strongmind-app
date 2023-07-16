@@ -119,7 +119,7 @@ class TestPizzaService(unittest.TestCase):
 
     def test_update_pizza(self):
         query_mock = Mock()
-        query_mock.first.return_value = Pizza(id=1, name='banana', toppings=[])
+        query_mock.first.return_value = Pizza(id=1, name='banana3', toppings=[])
 
         query_mock2 = Mock()
         query_mock2.first.return_value = None

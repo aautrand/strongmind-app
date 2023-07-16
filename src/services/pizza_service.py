@@ -62,7 +62,7 @@ class PizzaService:
         return jsonify(pizza=new_pizza.to_dict())
 
     @common_response
-    def update_pizza(self, pizza_id, new_pizza_name, new_toppings):
+    def update_pizza(self, pizza_id, new_pizza_name, new_toppings=None):
 
         old_pizza = self.pizza.query.filter_by(id=pizza_id).first()
 

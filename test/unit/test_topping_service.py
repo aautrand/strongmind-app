@@ -97,8 +97,13 @@ class TestToppingService(unittest.TestCase):
         self.mock_topping.query.filter.assert_called_once()
 
     def test_update_topping(self):
-        self.mock_topping.query.get.return_value = Topping(id=1, name='cheese')
-        self.mock_topping.query.filter.return_value = None
+        query_mock = Mock()
+        query_mock.first.return_value = Topping(id=1, name="cheese2")
+        self.mock_topping.query.get.return_value = query_mock
+
+        query_mock2 = Mock()
+        query_mock2.first.return_value = None
+        self.mock_topping.query.filter.return_value = query_mock2
 
         response = self.service.update_topping(1, "cheese2")
 
@@ -109,7 +114,9 @@ class TestToppingService(unittest.TestCase):
         self.mock_db.session.commit.assert_called_once()
 
     def test_update_topping_missing(self):
-        self.mock_topping.query.get.return_value = None
+        query_mock = Mock()
+        query_mock.first.return_value = None
+        self.mock_topping.query.get.return_value = query_mock
 
         response = self.service.update_topping(1, "cheese2")
 
@@ -118,8 +125,13 @@ class TestToppingService(unittest.TestCase):
         self.mock_topping.query.get.assert_called_once()
 
     def test_update_topping_duplicate(self):
-        self.mock_topping.query.get.return_value = Topping(id=1, name='cheese')
-        self.mock_topping.query.filter.return_value = Topping(id=2, name='cheese2')
+        query_mock = Mock()
+        query_mock.first.return_value = Topping(id=1, name="cheese2")
+        self.mock_topping.query.get.return_value = query_mock
+
+        query_mock2 = Mock()
+        query_mock2.first.return_value = Topping(id=1, name="cheese2")
+        self.mock_topping.query.filter.return_value = query_mock2
 
         response = self.service.update_topping(1, "cheese2")
 
