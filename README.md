@@ -13,6 +13,11 @@ Tests can be run locally via:
 1. make tests
 2. pytest .
 
+Backend testing can also be done via postman by following either of these two options: 
+1. https://red-crescent-714490.postman.co/workspace/strongmind~2be69919-fc14-424d-ab98-fd8bf968786a/collection/7146013-828bacfd-3d5a-467b-8aa7-caf82840c746?action=share&creator=7146013
+2. using the postman collection json file included in this repository. 
+   1. local environment variable host = 120.0.0.1:5000
+   2. production environment variable host = https://strongmind-test-07-11-761945a49865.herokuapp.com
 ### Deploy Application
 To deploy the application, one must first have the following items configured:
 * heroku cli 
