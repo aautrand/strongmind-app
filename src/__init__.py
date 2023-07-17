@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, redirect, url_for
 
 from config import Config
 from src.controllers import pizza_api, toppings_api, pizza_views, topping_views
@@ -19,7 +19,7 @@ def create_app(config_class=Config):
 
     @app.route('/')
     def home():
-        return render_template("index.html")
+        return redirect(url_for('pizza_views.get_pizza_list'))
 
     @app.route('/version')
     def version():

@@ -20,6 +20,7 @@ $(document).ready(function() {
             data: JSON.stringify(pizzaData),
             dataType: 'json',
             success: function (data) {
+                alert("Pizza creation was successful.")
                 $('#newPizzaModal').modal('hide');
                 $("#pizzaName").val('');
                 $("input:checkbox[name=toppings]:checked").each(function(){
@@ -61,6 +62,7 @@ $(document).ready(function() {
             data: JSON.stringify(pizzaData),
             dataType: 'json',
             success: function(data) {
+                alert("Pizza update was successful.")
                 location.reload();
             },
             error: function (xhr, status, error) {
@@ -80,6 +82,7 @@ $(document).ready(function() {
             contentType: 'application/json',
             dataType: 'json',
             success: function(data) {
+                alert("Pizza was successfully deleted.")
                 location.reload();
             },
             error: function (xhr, status, error) {
@@ -110,6 +113,7 @@ $(document).ready(function() {
             data: JSON.stringify(toppingData),
             dataType: 'json',
             success: function (data) {
+                alert("Topping creation was successful.")
                 $('#newToppingModal').modal('hide');
                 $("#toppingName").val('');
                 location.reload();
@@ -150,6 +154,7 @@ $(document).ready(function() {
             data: JSON.stringify(toppingData),
             dataType: 'json',
             success: function(data) {
+                alert("Topping update was successful.")
                 location.reload();
             },
             error: function (xhr, status, error) {
@@ -169,6 +174,7 @@ $(document).ready(function() {
             contentType: 'application/json',
             dataType: 'json',
             success: function(data) {
+                alert("Topping deletion was successful.")
                 location.reload();
             },
             error: function (xhr, status, error) {
