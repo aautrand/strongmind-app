@@ -7,6 +7,8 @@ bump_version:
 
 deploy:
 	@echo "\n ======= Deploying Application ======="
+	git push heroku main
 
 run:
-	@echo "\n ======= Running Application  ======="
+	@echo "\n ======= Running Application Locally ======="
+	python -m flask run

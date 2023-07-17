@@ -2,14 +2,23 @@
 ## Strongmind App
 
 ### Running locally
-how to run
+To run the application locally follow these steps:
+1. add database uri to SQLALCHEMY_DATABASE_URI environment variable:
+   1. export SQLALCHEMY_DATABASE_URI=postgresql://user:pass@host:port/db
+2. pip install -r requirements.txt
+3. run the 'make run' command
 
 ### Running Tests
-how to run tests
+To run tests locally run 
 
 ### Deploy Application
-how to deploy
+To deploy the application, one must first have the following items configured:
+* heroku cli 
+* a repository 
+* a database
 
+This post has good instructions on for the steps above: 
+https://blog.back4app.com/deploying-a-flask-app-on-heroku/
 
 -----
 ## Requirements

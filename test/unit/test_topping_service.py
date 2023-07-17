@@ -98,36 +98,36 @@ class TestToppingService(unittest.TestCase):
 
     def test_update_topping(self):
         query_mock = Mock()
-        query_mock.first.return_value = Topping(id=1, name="cheese2")
-        self.mock_topping.query.get.return_value = query_mock
+        query_mock.first.return_value = Topping(id=1, name="cheese")
 
         query_mock2 = Mock()
         query_mock2.first.return_value = None
-        self.mock_topping.query.filter.return_value = query_mock2
+
+        self.mock_topping.query.filter.side_effect = [query_mock, query_mock2]
 
         response = self.service.update_topping(1, "cheese2")
 
         # Assertions
         self.assertEqual(response.status_code, 200)
-        self.mock_topping.query.get.assert_called_once()
-        self.mock_topping.query.filter.assert_called_once()
+        calls = self.mock_topping.query.filter.call_args_list
+        self.assertEqual(len(calls), 2)
         self.mock_db.session.commit.assert_called_once()
 
     def test_update_topping_missing(self):
         query_mock = Mock()
         query_mock.first.return_value = None
-        self.mock_topping.query.get.return_value = query_mock
+        self.mock_topping.query.filter.return_value = query_mock
 
         response = self.service.update_topping(1, "cheese2")
 
         # Assertions
         self.assertEqual(response.status_code, 404)
-        self.mock_topping.query.get.assert_called_once()
+        self.mock_topping.query.filter.assert_called_once()
 
     def test_update_topping_duplicate(self):
         query_mock = Mock()
         query_mock.first.return_value = Topping(id=1, name="cheese2")
-        self.mock_topping.query.get.return_value = query_mock
+        self.mock_topping.query.filter.return_value = query_mock
 
         query_mock2 = Mock()
         query_mock2.first.return_value = Topping(id=1, name="cheese2")
@@ -137,8 +137,9 @@ class TestToppingService(unittest.TestCase):
 
         # Assertions
         self.assertEqual(response.status_code, 409)
-        self.mock_topping.query.get.assert_called_once()
-        self.mock_topping.query.filter.assert_called_once()
+
+        calls = self.mock_topping.query.filter.call_args_list
+        self.assertEqual(len(calls), 2)
 
     def test_delete_topping(self):
         self.mock_topping.query.get.return_value = Topping(id=1, name='cheese')
