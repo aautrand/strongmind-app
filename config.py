@@ -3,5 +3,5 @@ import os
 
 class Config:
     DEBUG = True
-    SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
+    SQLALCHEMY_DATABASE_URI = os.environ['SQLALCHEMY_DATABASE_URI']
     SQLALCHEMY_TRACK_MODIFICATIONS = False
