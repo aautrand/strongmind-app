@@ -5,7 +5,7 @@ tests:
 bump_version:
 	@echo "\n ======= Bumping Version ======="
 
-deploy:
+deploy: tests
 	@echo "\n ======= Deploying Application ======="
 	git push heroku main
 

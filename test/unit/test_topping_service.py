@@ -108,7 +108,7 @@ class TestToppingService(unittest.TestCase):
         response = self.service.update_topping(1, "cheese2")
 
         # Assertions
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 300)
         calls = self.mock_topping.query.filter.call_args_list
         self.assertEqual(len(calls), 2)
         self.mock_db.session.commit.assert_called_once()
