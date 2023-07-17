@@ -24,9 +24,9 @@ Backend testing can also be done via Postman by following either of these two op
 Due to time constraints I couldn't set up FE testing using selenium.
 
 ### Deploy Application
-To deploy the application use:
-
-_**make deploy**_
+* To deploy the application use:
+  * _**make deploy**_
+* when using **make deploy**, BE tests will run before doing actual deployment.
 
 Note:
 To deploy the application, one must first have the following items configured
