@@ -9,7 +9,9 @@ To run the application locally follow these steps:
 3. run the 'make run' command
 
 ### Running Tests
-To run tests locally run 
+Tests can be run locally via:
+1. make tests
+2. pytest .
 
 ### Deploy Application
 To deploy the application, one must first have the following items configured:
